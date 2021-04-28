@@ -21,17 +21,18 @@
 
 package reciter.pubmed.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang3.StringUtils;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import org.apache.commons.lang3.StringUtils;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Setter
@@ -63,8 +64,9 @@ public class PubMedQuery {
             //parts.add(author + " [au]");
         	parts.add(author);
         }
+        //Added both [DP] and [EDAT] for better capture of pubs : Date of publication - Date added to Entrez
         if (start != null && end != null) {
-            parts.add("(" + dt.format(start) + "[DP]" + ":" + dt.format(end) + "[DP])");
+            parts.add("((" + dt.format(start) + ":" + dt.format(end) + "[EDAT]" + ") OR (" + dt.format(start) + ":" + dt.format(end) + "[DP]))");
         }
         if (strategyQuery != null && !strategyQuery.isEmpty()) {
             parts.add(strategyQuery);
